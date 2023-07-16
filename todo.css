@@ -1,0 +1,104 @@
+body {
+  font-family: Ubuntu;
+  margin: 0;
+  padding: 0;
+  background-color: rgb(48, 48, 48);
+}
+
+.app-container {
+  max-width: 80%;
+  margin: 30px auto;
+  background-color:rgb(33, 33, 33);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #ffffff;
+}
+h2{
+  font-size: 20px;
+  margin-top: -15px;
+  font-style: italic;
+  text-align: center;
+  color: #ffffff;
+}
+
+input[type="text"] {
+  width: 90%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 25px;
+  border-style: solid;
+  height: 30px;
+  border: 1px solid #cccccc;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #555;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  color: white;
+}
+
+li {
+  padding: 10px;
+  margin-bottom: 5px;
+  background-color: #525151;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+li button {
+  background-color:rgb(33, 33, 33);
+  color: #fff;
+  border: none;
+  font-family: Ubuntu;
+  width: 100px;
+  border-radius: 3px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+li button.edit {
+  background-color: #333;
+}
+
+li button:hover {
+  background-color: #ff7878;
+}
+
+li input[type="text"] {
+  display: none;
+  width: 70%;
+  font-family: Ubuntu;
+  padding: 5px;
+}
+
+li input[type="text"].edit {
+  display: block;
+}
+
+li button.save {
+  background-color: #1e90ff;
+}
+
+li button.save:hover {
+  background-color: #3b9eff;
+}
