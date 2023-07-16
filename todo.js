@@ -1,6 +1,5 @@
 let todos = [];
 
-// Function to render the todo list
 function renderTodos() {
     const todoList = document.getElementById('todoList');
     todoList.innerHTML = '';
