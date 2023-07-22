@@ -5,16 +5,77 @@
     <link rel="stylesheet" type="text/css" href="todo.css">
     <link href='https://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet'>
     <link rel="icon" href="checklist.png" type="image/png">
-    
 </head>
 <body>
     <div class="app-container">
         <h1>To-Do List</h1>
         <h2>"Sky is the limit"</h2>
-        <input type="text" id="todoInput" placeholder="Enter a new task">
-        <button id="addBtn">Add</button>
+        <div class="input-container">
+            <div class="left-section">
+                <input type="text" id="todoInput" placeholder="Enter a new task">
+                <input type="text" id="categoryInput" placeholder="Category (optional)">
+            </div>
+            <div class="middle-section">
+                <label class="inputs">Set Due Date</label>
+                <input type="date" id="dueDateInput">
+                <label class="inputs">Priority</label>
+                <select id="priorityInput">
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+                <input type="text1" id="tagsInput" placeholder="Tags (comma-separated)">
+            </div>
+            <button class="addbutton" id="addBtn">Add</button>
+        </div>
+       <div class="sub-head">
+            Filters
+        </div>
+        <div class="filters">
+            <label class="inputs" for="dueDateFilterStart">Due Date Range:</label>
+            <input type="date" id="dueDateFilterStart">
+            <span class="inputs">to</span>
+            <input type="date" id="dueDateFilterEnd">
+            <label class="inputs" for="categoryFilter">Category:</label>
+            <input type="text1" id="categoryFilter" placeholder="Search Category">
+            <label class="inputs" for="priorityFilter">Priority:</label>
+            <select id="priorityFilter">
+                <option value="">All</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+            <button class="inputbtn" id="applyFilters">Apply Filters</button>
+            <button class="inputbtn" id="clearFilters">Clear Filters</button>
+        </div>
+        <div class="sub-head">
+            Search item by relevant keyword
+        </div>
+        <div class="search">
+            <input type="text2" id="searchTerm" placeholder="Search Todo">
+            <button id="searchBtn">Search</button>
+            <button id="clearSearchBtn">Clear Search</button>
+        </div>
+        <div class="sub-head">
+            Advance Filters
+        </div>
+        <div class="adv-filter">
+            <button class="inputbtn" id="viewBacklogsBtn">View Backlogs</button>
+            <button class="inputbtn" id="viewAllTasksBtn">View All Tasks</button>
+            <button class="inputbtn" id="sortDueDateBtn">Sort by Due Date</button>
+            <button class="inputbtn" id="sortPriorityBtn">Sort by Priority</button>
+            <button class="inputbtn" id="sortTitleBtn">Sort by Title</button>
+        </div>
+
         <ul id="todoList"></ul>
     </div>
+
+    <!-- ... Your existing HTML code ... -->
+<div class="activity-logs">
+    <h2>Activity Logs</h2>
+    <ul id="activityLogList"></ul>
+  </div>
+  
 
     <script src="todo.js"></script>
 </body>
