@@ -24,7 +24,7 @@
                     <option value="medium">Medium</option>
                     <option value="high">High</option>
                 </select>
-                <input type="text1" id="tagsInput" placeholder="Tags (comma-separated)">
+                <input type="text1" id="tagsInput" placeholder="Tags (by-comma)">
             </div>
             <button class="addbutton" id="addBtn">Add</button>
         </div>
@@ -70,10 +70,13 @@
         <ul id="todoList"></ul>
     </div>
 
-<div class="activity-logs">
-    <h2>Activity Logs</h2>
-    <ul id="activityLogList"></ul>
-  </div>
+    <div class="activity-logs">
+        <h2>Activity Logs</h2>
+        <div class="activity-log-buttons">
+          <button class="clear-activity-log-btn" onclick="clearActivityLog()">Clear Activity Log</button>
+        </div>
+        <ul id="activityLogList"></ul>
+      </div>
   
 
     <script src="todo.js"></script>

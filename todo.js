@@ -40,6 +40,13 @@ function fetchActivityLogsFromLocalStorage() {
   // Fetch activity logs from local storage when the page is loaded
 fetchActivityLogsFromLocalStorage();
 
+// Clear the activity logs
+function clearActivityLog() {
+    activityLogs = [];
+    renderActivityLogs();
+    updateActivityLogsLocalStorage();
+  }
+
 //search based on user input
 function performSearch() {
     const searchTerm = document.getElementById('searchTerm').value.trim().toLowerCase();
@@ -215,6 +222,20 @@ function renderTags(tags) {
     return tags.map(tag => `<span class="tag">${tag}</span>`).join(' ');
   }
 
+
+  function getMonthNumber(monthName) {
+    const months = {
+      'Jan': 0, 'Feb': 1, 'Mar': 2, 'Apr': 3, 'May': 4, 'Jun': 5,
+      'Jul': 6, 'Aug': 7, 'Sep': 8, 'Oct': 9, 'Nov': 10, 'Dec': 11
+    };
+  
+    if (monthName in months) {
+      return months[monthName];
+    }
+  
+    return undefined;
+  }
+
 // add a new todo
 function addTodo() {
     const todoInput = document.getElementById('todoInput');
@@ -229,15 +250,65 @@ function addTodo() {
     const todoTags = tagsInput.value.trim().split(',').map(tag => tag.trim()); // Split tags by comma
   
     if (todoTitle !== '') {
+      let dueDate;
+  
+      // Check for the due date in the todo task title
+      const dueDateMatch = todoTitle.match(/by\s+(tomorrow|today|\d{4}-\d{2}-\d{2}|(\d{1,2})(st|nd|rd|th)\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d{4})/i);
+  
+      if (dueDateMatch) {
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+  
+        // id there is keywords like "today" and "tomorrow"
+        if (/tomorrow/i.test(dueDateMatch[1])) {
+          dueDate = tomorrow;
+        } else if (/today/i.test(dueDateMatch[1])) {
+          dueDate = today;
+        } else if (dueDateMatch[2] && dueDateMatch[3]) {
+          const day = parseInt(dueDateMatch[2]);
+          const month = getMonthNumber(dueDateMatch[3]);
+          const year = today.getFullYear();
+  
+          if (day && month !== undefined) {
+            
+            const daySuffix = dueDateMatch[2].slice(-2);
+            const numericDay = parseInt(dueDateMatch[2].slice(0, -2));
+  
+            if (!isNaN(numericDay) && !isNaN(month) && year) {
+              dueDate = new Date(year, month, numericDay);
+  
+            
+              const endOfDay = new Date(dueDate);
+              endOfDay.setHours(23, 59, 59);
+  
+              if (dueDate < today) { 
+                dueDate = new Date(year + 1, month, numericDay);
+              } else if (dueDate > endOfDay) {
+                dueDate.setDate(dueDate.getDate() + 1);
+              }
+            }
+          }
+        } else {
+          dueDate = new Date(dueDateMatch[1]);
+        }
+  
+        dueDateInput.valueAsDate = dueDate;
+      } else if (todoDueDate !== '') {
+    
+        dueDate = new Date(todoDueDate);
+      }
+  
       todos.push({
-        title: todoTitle,
+        title: todoTitle.replace(/(by\s+tomorrow|by\s+today|\d{4}-\d{2}-\d{2}|(\d{1,2})(st|nd|rd|th)\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d{4})/gi, '').trim(),
         completed: false,
         category: todoCategory,
-        dueDate: todoDueDate,
+        dueDate: dueDate ? dueDate.toISOString().substring(0, 10) : undefined, // Convert date to YYYY-MM-DD format
         priority: todoPriority,
         subtasks: [],
         tags: todoTags 
       });
+  
       renderTodos(todos);
       todoInput.value = '';
       categoryInput.value = '';
@@ -248,6 +319,12 @@ function addTodo() {
       logActivity(`Task added: "${todoTitle}"`);
     }
   }
+  
+  
+ 
+  
+  
+  
   
 
 //delete a todo
@@ -361,14 +438,13 @@ function fetchFromLocalStorage() {
     if (storedTodos) {
       todos = JSON.parse(storedTodos);
   
-      // Check for expiring tasks and set reminders
+      // expiring tasks 
       todos.forEach((todo) => {
         if (todo.dueDate) {
           const dueDate = new Date(todo.dueDate);
           const currentTime = new Date();
           const timeDiff = dueDate.getTime() - currentTime.getTime();
   
-          // Set the time threshold for reminders (e.g., 24 hours)
           const reminderThreshold = 24 * 60 * 60 * 1000;
   
           if (timeDiff <= reminderThreshold && timeDiff > 0) {
@@ -383,7 +459,7 @@ function fetchFromLocalStorage() {
         }
       });
     }
-    renderTodos(todos); // Render the todos after getting the data from local storage
+    renderTodos(todos); 
 }
 
 // apply filters and render the filtered todos
@@ -458,3 +534,4 @@ document.getElementById('sortTitleBtn').addEventListener('click', sortByTitle);
 // Fetch data from local storage
 fetchFromLocalStorage();
 initializeEventListeners();
+

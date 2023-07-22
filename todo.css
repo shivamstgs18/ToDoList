@@ -34,6 +34,7 @@ h2{
   background-color:rgb(33, 33, 33);
   padding: 20px;
   border-radius: 10px;
+  justify-content: center;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -83,10 +84,13 @@ input[type="text2"] {
 
 .search{
   display: flex;
+  width: 50%;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
   margin-top: 30px;
+  margin-left: 280px;
+
 }
 
 button {
@@ -210,9 +214,9 @@ li button.save:hover {
 
 .filters {
   margin-bottom: 10px;
-  width: 90%;
+  width: 100%;
   margin-left: 50px;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-top: 30px;
 }
 .subtask-list {
@@ -243,6 +247,12 @@ li button.save:hover {
 .activity-logs h2 {
   margin-top: 0;
   color: #333;
+  font-size: 30px;
+}
+
+.clear-activity-log-btn{
+  align-items: center;
+  justify-content: center;
 }
 
 
