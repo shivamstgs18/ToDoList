@@ -44,30 +44,33 @@ fetchActivityLogsFromLocalStorage();
 function performSearch() {
     const searchTerm = document.getElementById('searchTerm').value.trim().toLowerCase();
     const filteredTodos = todos.filter(todo => {
-        
-        if (todo.title.toLowerCase() === searchTerm) {
-            return true;
+      // Check main task title
+      if (todo.title.toLowerCase().includes(searchTerm)) {
+        return true;
+      }
+      // Check subtasks
+      if (todo.subtasks && todo.subtasks.length) {
+        const subtaskMatches = todo.subtasks.some(subtask => subtask.title.toLowerCase().includes(searchTerm));
+        if (subtaskMatches) {
+          return true;
         }
-        // Sub-tasks search
-        if (todo.subtasks && todo.subtasks.length) {
-            return todo.subtasks.some(subtask => subtask.title.toLowerCase().includes(searchTerm));
+      }
+      // Check tags
+      if (todo.tags && todo.tags.length) {
+        const tagMatches = todo.tags.some(tag => tag.toLowerCase().includes(searchTerm));
+        if (tagMatches) {
+          return true;
         }
-        const todoWords = todo.title.toLowerCase().split(' ');
-        if (todoWords.some(word => word.includes(searchTerm))) {
-            return true;
-        }
-
-        if (todo.title.toLowerCase().includes(searchTerm)) {
-            return true;
-        }
-        // Tags search
-        if (todo.tags && todo.tags.length) {
-            return todo.tags.some(tag => tag.toLowerCase() === searchTerm);
-        }
-        return false;
+      }
+      // Check category
+      if (todo.category && todo.category.toLowerCase().includes(searchTerm)) {
+        return true;
+      }
+      return false;
     });
     renderTodos(filteredTodos);
-}
+  }
+  
 
 // clear the search and show all tasks
 function clearSearch() {
@@ -455,4 +458,3 @@ document.getElementById('sortTitleBtn').addEventListener('click', sortByTitle);
 // Fetch data from local storage
 fetchFromLocalStorage();
 initializeEventListeners();
-
