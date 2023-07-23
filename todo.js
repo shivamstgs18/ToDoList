@@ -1,51 +1,3 @@
-// storing activity logs
-let activityLogs = [];
-
-//render activity logs
-function renderActivityLogs() {
-  const activityLogList = document.getElementById('activityLogList');
-  activityLogList.innerHTML = '';
-
-  activityLogs.forEach((log) => {
-    const li = document.createElement('li');
-    li.textContent = log;
-    activityLogList.appendChild(li);
-  });
-}
-
-// log an activity
-function logActivity(activity) {
-  const currentDate = new Date();
-  const formattedDate = currentDate.toLocaleString();
-  const logEntry = `[${formattedDate}] ${activity}`;
-  activityLogs.push(logEntry);
-  renderActivityLogs();
-
-   updateActivityLogsLocalStorage();
-}
-
-// update the local storage with activity logs
-function updateActivityLogsLocalStorage() {
-    localStorage.setItem('activityLogs', JSON.stringify(activityLogs));
-  }
-
-// fetch activity logs from local storage
-function fetchActivityLogsFromLocalStorage() {
-    const storedActivityLogs = localStorage.getItem('activityLogs');
-    if (storedActivityLogs) {
-      activityLogs = JSON.parse(storedActivityLogs);
-      renderActivityLogs();
-    }
-  }
-  // Fetch activity logs from local storage when the page is loaded
-fetchActivityLogsFromLocalStorage();
-
-// Clear the activity logs
-function clearActivityLog() {
-    activityLogs = [];
-    renderActivityLogs();
-    updateActivityLogsLocalStorage();
-  }
 
 //search based on user input
 function performSearch() {
@@ -222,6 +174,7 @@ function renderTags(tags) {
     return tags.map(tag => `<span class="tag">${tag}</span>`).join(' ');
   }
 
+  // function to get month
 
   function getMonthNumber(monthName) {
     const months = {
@@ -260,7 +213,7 @@ function addTodo() {
         const tomorrow = new Date(today);
         tomorrow.setDate(tomorrow.getDate() + 1);
   
-        // id there is keywords like "today" and "tomorrow"
+        // if there is keywords like "today" and "tomorrow"
         if (/tomorrow/i.test(dueDateMatch[1])) {
           dueDate = tomorrow;
         } else if (/today/i.test(dueDateMatch[1])) {
@@ -321,12 +274,6 @@ function addTodo() {
   }
   
   
- 
-  
-  
-  
-  
-
 //delete a todo
 function deleteTodo(index) {
   todos.splice(index, 1);
@@ -534,4 +481,3 @@ document.getElementById('sortTitleBtn').addEventListener('click', sortByTitle);
 // Fetch data from local storage
 fetchFromLocalStorage();
 initializeEventListeners();
-
