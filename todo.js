@@ -200,7 +200,7 @@ function addTodo() {
     const priorityInput = document.getElementById('priorityInput');
     const todoPriority = priorityInput.value;
     const tagsInput = document.getElementById('tagsInput');
-    const todoTags = tagsInput.value.trim().split(',').map(tag => tag.trim()); // Split tags by comma
+    const todoTags = tagsInput.value.trim().split(',').map(tag => tag.trim());
   
     if (todoTitle !== '') {
       let dueDate;
@@ -256,7 +256,7 @@ function addTodo() {
         title: todoTitle.replace(/(by\s+tomorrow|by\s+today|\d{4}-\d{2}-\d{2}|(\d{1,2})(st|nd|rd|th)\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d{4})/gi, '').trim(),
         completed: false,
         category: todoCategory,
-        dueDate: dueDate ? dueDate.toISOString().substring(0, 10) : undefined, // Convert date to YYYY-MM-DD format
+        dueDate: dueDate ? dueDate.toISOString().substring(0, 10) : undefined,
         priority: todoPriority,
         subtasks: [],
         tags: todoTags 
